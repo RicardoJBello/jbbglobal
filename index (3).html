@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JBB Global Transportes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy: #0a1628;
+      --navy-mid: #112240;
+      --gold: #c8973a;
+      --gold-light: #e5b96a;
+      --white: #f4f6fa;
+      --gray: #8a9bb5;
+      --gray-light: #dce3ee;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 5vw;
+      background: rgba(10,22,40,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,151,58,0.2);
+    }
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1.5rem; letter-spacing: 0.04em;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gray);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 5vw;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 50%, rgba(200,151,58,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 80% at 10% 80%, rgba(17,34,64,0.9) 0%, transparent 60%),
+        linear-gradient(160deg, #0a1628 0%, #112240 100%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(200,151,58,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,151,58,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content { position: relative; max-width: 760px; }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+      border: 1px solid rgba(200,151,58,0.4);
+      padding: 0.35rem 1rem; border-radius: 2px;
+      margin-bottom: 1.8rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: clamp(3.2rem, 8vw, 6.5rem);
+      line-height: 0.95; letter-spacing: -0.01em;
+      color: var(--white);
+      animation: fadeUp 0.8s 0.15s ease both;
+    }
+    .hero-title em { color: var(--gold); font-style: normal; }
+    .hero-sub {
+      margin-top: 1.8rem;
+      font-size: 1.1rem; font-weight: 300; line-height: 1.7;
+      color: var(--gray); max-width: 540px;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.45s ease both;
+    }
+    .btn {
+      display: inline-block; padding: 0.85rem 2rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.95rem; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none;
+      border-radius: 3px; transition: all 0.25s;
+    }
+    .btn-primary { background: var(--gold); color: var(--navy); }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-outline { border: 1px solid rgba(200,151,58,0.5); color: var(--gold); }
+    .btn-outline:hover { background: rgba(200,151,58,0.08); transform: translateY(-2px); }
+
+    .hero-stats {
+      position: relative; margin-top: 5rem;
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.6s ease both;
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.8rem; font-weight: 800; color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gray); margin-top: 0.3rem;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 5vw; }
+    .section-tag {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.05; color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .section-title em { color: var(--gold); font-style: normal; }
+    .section-body {
+      font-size: 1rem; font-weight: 300; line-height: 1.8;
+      color: var(--gray); max-width: 640px;
+    }
+
+    /* ── SOBRE ── */
+    #sobre { background: var(--navy); }
+    .sobre-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center; margin-top: 3rem;
+    }
+    .sobre-text p { margin-bottom: 1rem; }
+    .sobre-timeline { border-left: 2px solid rgba(200,151,58,0.3); padding-left: 1.5rem; }
+    .tl-item { margin-bottom: 1.6rem; position: relative; }
+    .tl-item::before {
+      content: '';
+      position: absolute; left: -1.9rem; top: 0.4rem;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold);
+    }
+    .tl-year {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 0.9rem; color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+    .tl-desc {
+      font-size: 0.88rem; color: var(--gray); line-height: 1.5; margin-top: 0.2rem;
+    }
+
+    /* ── SOLUÇÕES ── */
+    #solucoes { background: var(--navy-mid); }
+    .solucoes-cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .card {
+      background: rgba(10,22,40,0.7);
+      border: 1px solid rgba(200,151,58,0.15);
+      border-radius: 4px; padding: 2rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .card:hover { border-color: var(--gold); transform: translateY(-4px); }
+    .card-icon {
+      width: 44px; height: 44px; border-radius: 3px;
+      background: rgba(200,151,58,0.12);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.2rem; font-size: 1.3rem;
+    }
+    .card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 1.2rem; color: var(--white);
+      margin-bottom: 0.6rem; letter-spacing: 0.04em;
+    }
+    .card-body { font-size: 0.88rem; color: var(--gray); line-height: 1.6; }
+
+    /* diferenciais strip */
+    .diferenciais {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px; background: rgba(200,151,58,0.1);
+      border: 1px solid rgba(200,151,58,0.1);
+      border-radius: 4px; margin-top: 3rem; overflow: hidden;
+    }
+    .dif-item {
+      padding: 1.8rem 1.5rem;
+      background: var(--navy-mid);
+      text-align: center;
+    }
+    .dif-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2rem; font-weight: 800; color: var(--gold);
+    }
+    .dif-label { font-size: 0.8rem; color: var(--gray); margin-top: 0.3rem; }
+
+    /* ── DNA ── */
+    #dna { background: var(--navy); }
+    .pilares {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .pilar {
+      border-top: 3px solid var(--gold);
+      padding-top: 1.5rem;
+    }
+    .pilar-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 3rem; font-weight: 800;
+      color: rgba(200,151,58,0.15); line-height: 1;
+    }
+    .pilar-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 1.4rem; color: var(--white);
+      margin: 0.3rem 0 0.6rem;
+    }
+    .pilar-body { font-size: 0.88rem; color: var(--gray); line-height: 1.6; }
+
+    /* ── SUSTENTABILIDADE ── */
+    #sustentabilidade { background: var(--navy-mid); }
+    .sust-list { margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+    .sust-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1.2rem 1.5rem;
+      background: rgba(10,22,40,0.5);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 4px 4px 0;
+    }
+    .sust-icon { font-size: 1.2rem; margin-top: 0.1rem; }
+    .sust-text { font-size: 0.92rem; color: var(--gray); line-height: 1.6; }
+
+    /* ── CONTATO ── */
+    #contato { background: var(--navy); }
+    .contato-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; margin-top: 3rem; align-items: start;
+    }
+    .contato-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contato-row { display: flex; gap: 1rem; align-items: flex-start; }
+    .contato-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem;
+    }
+    .contato-val { font-size: 0.95rem; color: var(--gray); }
+    .contato-val a { color: var(--gray-light); text-decoration: none; }
+    .contato-val a:hover { color: var(--gold); }
+
+    .contato-cta {
+      background: linear-gradient(135deg, rgba(200,151,58,0.12), rgba(200,151,58,0.04));
+      border: 1px solid rgba(200,151,58,0.25);
+      border-radius: 4px; padding: 2.5rem;
+    }
+    .contato-cta h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 1.6rem; color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+    .contato-cta p { font-size: 0.9rem; color: var(--gray); line-height: 1.6; margin-bottom: 1.5rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060e1a;
+      padding: 2rem 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(200,151,58,0.1);
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800; font-size: 1.2rem; color: var(--white);
+    }
+    .footer-logo span { color: var(--gold); }
+    .footer-copy { font-size: 0.78rem; color: var(--gray); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .sobre-grid, .contato-grid, .pilares { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">JBB <span>GLOBAL</span></a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#solucoes">Soluções</a></li>
+    <li><a href="#dna">Nossa Essência</a></li>
+    <li><a href="#sustentabilidade">Sustentabilidade</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Transportes &amp; Logística</span>
+    <h1 class="hero-title">Logística que<br/><em>move o Brasil.</em></h1>
+    <p class="hero-sub">30 anos de experiência, mais de 1 milhão de cargas entregues. Gestão completa de entregas e riscos em todo o território nacional.</p>
+    <div class="hero-cta">
+      <a href="#solucoes" class="btn btn-primary">Nossas Soluções</a>
+      <a href="#contato" class="btn btn-outline">Fale Conosco</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">30+</div>
+        <div class="stat-label">Anos de mercado</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1M+</div>
+        <div class="stat-label">Cargas entregues</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">Suporte operacional</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="section-tag">Quem Somos</div>
+  <h2 class="section-title">Tradição e <em>inovação</em><br/>em cada entrega</h2>
+  <div class="sobre-grid">
+    <div class="sobre-text section-body">
+      <p>Com mais de 30 anos de know-how no mercado de transportes, a JBB Global Transportes se consolidou como referência em gestão de entregas e gestão de riscos em todo o território nacional.</p>
+      <p>Contamos com frota própria e rede de caminhoneiros parceiros qualificados. Somos habilitados para o transporte de cargas perigosas, cosméticos e fármacos, mantendo todas as licenças junto aos órgãos competentes sempre atualizadas.</p>
+      <p>Entendemos que tecnologia e processos precisam caminhar juntos — por isso alcançamos um equilíbrio consistente entre investimento em tecnologia, processos e pessoas.</p>
+    </div>
+    <div class="sobre-timeline">
+      <div class="tl-item">
+        <div class="tl-year">2000</div>
+        <div class="tl-desc">Início das operações especializadas em transporte.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2003</div>
+        <div class="tl-desc">Ampliação da capacidade de entrega em 200% com nova frota dedicada.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2005</div>
+        <div class="tl-desc">Expansão da malha para todo o estado de SP e novos segmentos.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2009</div>
+        <div class="tl-desc">Ampliação para atendimento em outros estados brasileiros.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2012</div>
+        <div class="tl-desc">Inauguração de base operacional própria com estrutura completa.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2016</div>
+        <div class="tl-desc">Início da transformação digital com nova identidade visual.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2020</div>
+        <div class="tl-desc">Especialização em Gestão de Cargas e Gestão de Risco.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2022</div>
+        <div class="tl-desc">Investimento recorde em tecnologia e salto relevante em performance operacional.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÕES -->
+<section id="solucoes">
+  <div class="section-tag">O que fazemos</div>
+  <h2 class="section-title">Soluções <em>completas</em><br/>para o seu negócio</h2>
+  <p class="section-body">Oferecemos soluções logísticas personalizadas para embarcadores de todos os segmentos, com cobertura em todo o território nacional.</p>
+
+  <div class="solucoes-cards">
+    <div class="card">
+      <div class="card-icon">🚛</div>
+      <div class="card-title">Outbound</div>
+      <div class="card-body">Gestão completa de entregas com cobertura nacional. Rede de apoio estratégica em todos os estados, com suporte ao motorista, ao caminhão e à carga.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📦</div>
+      <div class="card-title">Inbound</div>
+      <div class="card-body">Recebimento e controle de mercadorias com rastreabilidade e processos eficientes para garantir a integridade de cada carga.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏭</div>
+      <div class="card-title">Armazenagem</div>
+      <div class="card-body">Estrutura própria em Barueri e Bragança Paulista (SP): segurança 24h, áreas climatizadas, gestão de estoques, pé-direito de 10 metros e áreas especiais para produtos de alto valor.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">↩️</div>
+      <div class="card-title">Logística Reversa</div>
+      <div class="card-body">Operações de reversa integradas ao seu processo, garantindo eficiência no retorno de mercadorias e redução de custos operacionais.</div>
+    </div>
+  </div>
+
+  <div class="diferenciais" style="grid-template-columns: 1fr 1fr;">
+    <div class="dif-item">
+      <div class="dif-num">24h</div>
+      <div class="dif-label">Central de segurança</div>
+    </div>
+    <div class="dif-item">
+      <div class="dif-num">100%</div>
+      <div class="dif-label">Cargas seguradas — SOMPO</div>
+    </div>
+    <div class="dif-item" style="grid-column: 1 / -1;">
+      <div class="dif-num">BR</div>
+      <div class="dif-label">Cobertura nacional</div>
+    </div>
+  </div>
+</section>
+
+<!-- DNA -->
+<section id="dna">
+  <div class="section-tag">Nossa Essência</div>
+  <h2 class="section-title">Tecnologia, Processos<br/>e <em>Pessoas</em></h2>
+  <p class="section-body">Manter competitividade enquanto geramos valor aos nossos clientes é um grande desafio. Por isso, a JBB Global Transportes se transforma continuamente em uma empresa de gestão e tecnologia.</p>
+
+  <div class="pilares">
+    <div class="pilar">
+      <div class="pilar-num">01</div>
+      <div class="pilar-title">Tecnologia</div>
+      <div class="pilar-body">Investimento contínuo em soluções próprias e de parceiros, garantindo eficiência operacional, rastreabilidade e transparência em toda a cadeia logística.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-num">02</div>
+      <div class="pilar-title">Processos</div>
+      <div class="pilar-body">Processos eficientes geram valor. Metodologias estruturadas que garantem previsibilidade, segurança e excelência em cada etapa da operação.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-num">03</div>
+      <div class="pilar-title">Pessoas</div>
+      <div class="pilar-body">Treinamentos periódicos ao time operacional e administrativo. Acreditamos que tecnologia sem pessoas não sustenta crescimento.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SUSTENTABILIDADE -->
+<section id="sustentabilidade">
+  <div class="section-tag">Responsabilidade</div>
+  <h2 class="section-title">Nosso papel<br/>no <em>mundo</em></h2>
+  <p class="section-body">A JBB Global Transportes é uma empresa comprometida com o meio ambiente e signatária do programa <strong style="color:var(--gold-light)">Empresa Cidadã</strong>.</p>
+
+  <div class="sust-list">
+    <div class="sust-item">
+      <div class="sust-icon">🔧</div>
+      <div class="sust-text">Processo rigoroso de manutenção preventiva e corretiva de todos os equipamentos da frota.</div>
+    </div>
+    <div class="sust-item">
+      <div class="sust-icon">🤝</div>
+      <div class="sust-text">Parceiros caminhoneiros engajados na jornada de sustentabilidade, com programa de manutenção de equipamentos e controle de pragas.</div>
+    </div>
+    <div class="sust-item">
+      <div class="sust-icon">💻</div>
+      <div class="sust-text">Transformação digital do escritório: dados armazenados exclusivamente de forma digital, reduzindo o impacto ambiental.</div>
+    </div>
+    <div class="sust-item">
+      <div class="sust-icon">🌱</div>
+      <div class="sust-text">Empresa Cidadã — comprometida com responsabilidade social e com o desenvolvimento sustentável do setor.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="section-tag">Fale Conosco</div>
+  <h2 class="section-title">Vamos <em>trabalhar</em><br/>juntos?</h2>
+  <div class="contato-grid">
+    <div class="contato-info">
+      <div>
+        <div class="contato-label">Comercial</div>
+        <div class="contato-val">Jose</div>
+      </div>
+      <div>
+        <div class="contato-label">E-mail</div>
+        <div class="contato-val"><a href="mailto:contato@jbbglobal.com.br">contato@jbbglobal.com.br</a></div>
+      </div>
+      <div>
+        <div class="contato-label">Telefone</div>
+        <div class="contato-val"><a href="tel:+551193376-0580">(11) 9 3376-0580</a></div>
+      </div>
+      <div>
+        <div class="contato-label">Endereço</div>
+        <div class="contato-val">Av. dos Autonomistas, 2561</div>
+      </div>
+    </div>
+    <div class="contato-cta">
+      <h3>Solicite uma proposta</h3>
+      <p>Entre em contato com nosso time comercial e descubra como a JBB Global Transportes pode otimizar a sua operação logística.</p>
+      <a href="mailto:contato@jbbglobal.com.br" class="btn btn-primary">Enviar E-mail</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">JBB <span>GLOBAL</span> TRANSPORTES</div>
+  <div class="footer-copy">© 2026 JBB Global Transportes. Todos os direitos reservados.</div>
+</footer>
+
+</body>
+</html>
